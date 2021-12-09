@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {Typography, Button, Box, Card, CardActions, CardContent } from "@material-ui/core"
+import { Typography, Button, Box, Card, CardActions, CardContent } from "@material-ui/core"
 import './DeletarPostagem.css';
 import { useHistory, useParams } from 'react-router-dom';
 import useLocalStorage from 'react-use-localstorage';
@@ -7,46 +7,46 @@ import Postagem from '../../../models/Postagem';
 import { buscaId, deleteId } from '../../../services/Service';
 
 function DeletarPostagem() {
-    let history = useHistory();
-    const { id } = useParams<{id: string}>();
-    const [token, setToken] = useLocalStorage('token');
-    const [post, setPosts] = useState<Postagem>()
+  let history = useHistory();
+  const { id } = useParams<{ id: string }>();
+  const [token, setToken] = useLocalStorage('token');
+  const [post, setPosts] = useState<Postagem>()
 
-    useEffect(() => {
-        if (token == "") {
-            alert("Você precisa estar logado")
-            history.push("/login")
-    
-        }
-    }, [token])
+  useEffect(() => {
+    if (token == "") {
+      alert("Você precisa estar logado")
+      history.push("/login")
 
-    useEffect(() =>{
-        if(id !== undefined){
-            findById(id)
-        }
-    }, [id])
+    }
+  }, [token])
 
-    async function findById(id: string) {
-        buscaId(`/postagens/${id}`, setPosts, {
-            headers: {
-              'Authorization': token
-            }
-          })
-        }
+  useEffect(() => {
+    if (id !== undefined) {
+      findById(id)
+    }
+  }, [id])
 
-        function sim() {
-            history.push('/posts')
-            deleteId(`/postagens/${id}`, {
-              headers: {
-                'Authorization': token
-              }
-            });
-            alert('Postagem deletada com sucesso');
-          }
-        
-          function nao() {
-            history.push('/posts')
-          }
+  async function findById(id: string) {
+    buscaId(`/postagens/${id}`, setPosts, {
+      headers: {
+        'Authorization': token
+      }
+    })
+  }
+
+  function sim() {
+    history.push('/posts')
+    deleteId(`/postagens/${id}`, {
+      headers: {
+        'Authorization': token
+      }
+    });
+    alert('Postagem deletada com sucesso');
+  }
+
+  function nao() {
+    history.push('/posts')
+  }
   return (
     <>
       <Box m={2}>
@@ -57,7 +57,7 @@ function DeletarPostagem() {
                 Deseja deletar a Postagem:
               </Typography>
               <Typography color="textSecondary" >
-              {post?.titulo}
+                {post?.titulo}
               </Typography>
             </Box>
 
@@ -65,14 +65,14 @@ function DeletarPostagem() {
           <CardActions>
             <Box display="flex" justifyContent="start" ml={1.0} mb={2} >
               <Box mx={2}>
-              <Button onClick={sim} variant="contained" className="marginLeft" size='large' color="primary">
-                Sim
-              </Button>
+                <Button onClick={sim} variant="contained" className="marginLeft" size='large' color="primary">
+                  Sim
+                </Button>
               </Box>
               <Box>
-              <Button  onClick={nao} variant="contained" size='large' color="secondary">
-                Não
-              </Button>
+                <Button onClick={nao} variant="contained" size='large' color="secondary">
+                  Não
+                </Button>
               </Box>
             </Box>
           </CardActions>
